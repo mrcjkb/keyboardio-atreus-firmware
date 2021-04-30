@@ -27,12 +27,8 @@
 #include "Kaleidoscope-FocusSerial.h"
 #include "Kaleidoscope-TapDance.h"
 #include "Kaleidoscope-Macros.h"
-#include "Kaleidoscope-MouseKeys.h"
-#include "Kaleidoscope-OneShot.h"
 #include "Kaleidoscope-Qukeys.h"
-#include "Kaleidoscope-SpaceCadet.h"
-#include "Kaleidoscope-Languages.h"
-#include "kaleidoscope/lang/de-qwertz.h"
+#include "Key-Definitions.h"
 
 
 
@@ -43,16 +39,6 @@ enum {
   MACRO_QWERTY,
   MACRO_VERSION_INFO
 };
-
-#define Key_Exclamation LSHIFT(Key_1)
-#define Key_At LSHIFT(Key_2)
-#define Key_Hash LSHIFT(Key_3)
-#define Key_Dollar LSHIFT(Key_4)
-#define Key_Percent LSHIFT(Key_5)
-#define Key_Caret LSHIFT(Key_6)
-#define Key_And LSHIFT(Key_7)
-#define Key_Star LSHIFT(Key_8)
-#define Key_Plus LSHIFT(Key_Equals)
 
 enum {
   QWERTY,
@@ -68,7 +54,6 @@ enum {
 #define TD_u 4 // u or ü
 #define TD_U 5 // u or ü
 #define TD_S 6 // s or ß
-#define TD_Q 7 // q or @
 #define TD_E 8 // e or €
 
 /* *INDENT-OFF* */
@@ -122,10 +107,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   FocusSettingsCommand,
   Qukeys,
   TapDance,
-  SpaceCadet,
-  OneShot,
-  Macros,
-  MouseKeys
+  Macros
 );
 
 const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
@@ -150,10 +132,31 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   return MACRO_NONE;
 }
 
+void tapDanceAction(uint8_t tap_dance_index, KeyAddr key_addr, uint8_t tap_count, kaleidoscope::plugin::TapDance::ActionType tap_dance_action) {
+  switch (tap_dance_index) {
+    case TD_a:
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_A, Key_aUml);
+    case TD_A:
+      return tapDanceActionKeys(tap_count, tap_dance_action, LSHIFT(Key_A), Key_AUml);
+    case TD_o:
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_O, Key_oUml);
+    case TD_O:
+      return tapDanceActionKeys(tap_count, tap_dance_action, LSHIFT(Key_O), Key_OUml);
+    case TD_u:
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_U, Key_uUml);
+    case TD_U:
+      return tapDanceActionKeys(tap_count, tap_dance_action, LSHIFT(Key_U), Key_UUml);
+    case TD_E:
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_E, Key_EUR);
+    case TD_S:
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_S, Key_de_SS);
+  } 
+}
+
 void setup() {
-  Kaleidoscope.setup();
-  SpaceCadet.disable();
+  TapDance.time_out = 200;
   EEPROMKeymap.setup(10);
+  Kaleidoscope.setup();
 }
 
 void loop() {

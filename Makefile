@@ -1,19 +1,10 @@
 # This makefile for a Kaleidoscope sketch pulls in all the targets
 # required to build the example
 
-
-
-
 ifneq ($(KALEIDOSCOPE_DIR),)
 search_path += $(KALEIDOSCOPE_DIR)
 else
 $(info KALEIDOSCOPE_DIR environment variable not set!)
-endif
-
-ifneq ($(KALEIDOSCOPE_LANGUAGES_DIR),)
-search_path += $(KALEIDOSCOPE_LANGUAGES_DIR)
-else
-$(info KALEIDOSCOPE_LANGUAGES_DIR environment variable not set!)
 endif
 
 ifneq ($(ARDUINO_DIRECTORIES_USER),)
