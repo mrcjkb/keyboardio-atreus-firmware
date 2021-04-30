@@ -25,11 +25,14 @@
 #include "Kaleidoscope-EEPROM-Settings.h"
 #include "Kaleidoscope-EEPROM-Keymap.h"
 #include "Kaleidoscope-FocusSerial.h"
+#include "Kaleidoscope-TapDance.h"
 #include "Kaleidoscope-Macros.h"
 #include "Kaleidoscope-MouseKeys.h"
 #include "Kaleidoscope-OneShot.h"
 #include "Kaleidoscope-Qukeys.h"
 #include "Kaleidoscope-SpaceCadet.h"
+#include "Kaleidoscope-Languages.h"
+#include "kaleidoscope/lang/de-qwertz.h"
 
 
 
@@ -56,6 +59,17 @@ enum {
   FUN,
   UPPER
 };
+
+// List of tap dance indices:
+#define TD_a 0 // a or ä
+#define TD_A 1 // a or ä
+#define TD_o 2 // o or ö
+#define TD_O 3 // o or ö
+#define TD_u 4 // u or ü
+#define TD_U 5 // u or ü
+#define TD_S 6 // s or ß
+#define TD_Q 7 // q or @
+#define TD_E 8 // e or €
 
 /* *INDENT-OFF* */
 KEYMAPS(
@@ -107,6 +121,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   FocusEEPROMCommand,
   FocusSettingsCommand,
   Qukeys,
+  TapDance,
   SpaceCadet,
   OneShot,
   Macros,
