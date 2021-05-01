@@ -18,7 +18,7 @@
  */
 
 #ifndef BUILD_INFORMATION
-#define BUILD_INFORMATION "MrcJkb's firmware version 1.0.0"
+#define BUILD_INFORMATION "MrcJkb's firmware version 1.0.1"
 #endif
 
 #include "Kaleidoscope.h"
