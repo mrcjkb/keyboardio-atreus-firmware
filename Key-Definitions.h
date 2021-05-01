@@ -13,7 +13,6 @@
 #define Key_OUml RALT(LSHIFT(Key_P))
 #define Key_aUml RALT(Key_Q)
 #define Key_AUml RALT(LSHIFT(Key_Q))
-#define Key_de_SS Key_U // TODO
 #define Key_Eur RALT(Key_5)
 #define Key_eGrave RALT(Key_E)
 #define Key_de_SS RALT(Key_S)
