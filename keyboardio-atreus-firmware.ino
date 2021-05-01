@@ -18,7 +18,7 @@
  */
 
 #ifndef BUILD_INFORMATION
-#define BUILD_INFORMATION "locally built"
+#define BUILD_INFORMATION "MrcJkb's firmware version 1.0.0"
 #endif
 
 #include "Kaleidoscope.h"
@@ -30,11 +30,6 @@
 #include "Kaleidoscope-Qukeys.h"
 #include "Key-Definitions.h"
 
-
-
-#define MO(n) ShiftToLayer(n)
-#define TG(n) LockLayer(n)
-
 enum {
   MACRO_QWERTY,
   MACRO_VERSION_INFO
@@ -43,18 +38,16 @@ enum {
 enum {
   QWERTY,
   FUN,
-  UPPER
+  UPPER_0,
+  UPPER_1
 };
 
 // List of tap dance indices:
-#define TD_a 0 // a or ä
-#define TD_A 1 // a or ä
-#define TD_o 2 // o or ö
-#define TD_O 3 // o or ö
-#define TD_u 4 // u or ü
-#define TD_U 5 // u or ü
-#define TD_S 6 // s or ß
-#define TD_E 8 // e or €
+#define TD_A 0
+#define TD_O 1
+#define TD_U 2
+#define TD_S 3
+#define TD_E 4
 
 /* *INDENT-OFF* */
 KEYMAPS(
@@ -68,7 +61,7 @@ KEYMAPS(
                      ,Key_Y     ,Key_U      ,Key_I     ,Key_O      ,Key_P
                      ,Key_H     ,Key_J      ,Key_K     ,Key_L      ,Key_Semicolon
        ,Key_Backslash,Key_N     ,Key_M      ,Key_Comma ,Key_Period ,Key_Slash
-       ,Key_LeftAlt  ,Key_Space ,MO(FUN)    ,Key_Minus ,Key_Quote  ,Key_Enter
+       ,Key_LeftAlt  ,Key_Space ,ShiftToLayer(FUN)    ,Key_Minus ,Key_Quote  ,Key_Enter
   ),
 
   [FUN] = KEYMAP_STACKED
@@ -76,7 +69,7 @@ KEYMAPS(
        Key_Exclamation ,Key_At           ,Key_UpArrow   ,Key_Dollar           ,Key_Percent
       ,Key_LeftParen   ,Key_LeftArrow    ,Key_DownArrow ,Key_RightArrow       ,Key_RightParen
       ,Key_LeftBracket ,Key_RightBracket ,Key_Hash      ,Key_LeftCurlyBracket ,Key_RightCurlyBracket ,Key_Caret
-      ,TG(UPPER)       ,Key_Insert       ,Key_LeftGui   ,Key_LeftShift        ,Key_Delete         ,Key_LeftControl
+      ,LockLayer(UPPER_0)       ,Key_Insert       ,Key_LeftGui   ,Key_LeftShift        ,Key_Delete         ,Key_LeftControl
 
                    ,Key_PageUp   ,Key_7 ,Key_8      ,Key_9 ,Key_Backspace
                    ,Key_PageDown ,Key_4 ,Key_5      ,Key_6 ,___
@@ -84,17 +77,30 @@ KEYMAPS(
       ,Key_LeftAlt ,Key_Space    ,___   ,Key_Period ,Key_0 ,Key_Equals
    ),
 
-  [UPPER] = KEYMAP_STACKED
+  [UPPER_0] = KEYMAP_STACKED
   (
        Key_Insert            ,Key_Home                 ,Key_UpArrow   ,Key_End        ,Key_PageUp
       ,Key_Delete            ,Key_LeftArrow            ,Key_DownArrow ,Key_RightArrow ,Key_PageDown
       ,M(MACRO_VERSION_INFO) ,Consumer_VolumeIncrement ,XXX           ,XXX            ,___ ,___
-      ,MoveToLayer(QWERTY)   ,Consumer_VolumeDecrement ,___           ,___            ,___ ,___
+      ,LockLayer(UPPER_1)   ,Consumer_VolumeDecrement ,___           ,___            ,___ ,___
 
                 ,Key_UpArrow   ,Key_F7              ,Key_F8          ,Key_F9         ,Key_F10
                 ,Key_DownArrow ,Key_F4              ,Key_F5          ,Key_F6         ,Key_F11
       ,___      ,XXX           ,Key_F1              ,Key_F2          ,Key_F3         ,Key_F12
       ,___      ,___           ,MoveToLayer(QWERTY) ,Key_PrintScreen ,Key_ScrollLock ,Consumer_PlaySlashPause
+   ),
+
+  [UPPER_1] = KEYMAP_STACKED
+  (
+       ___            ,___                 ,TD(TD_E)   ,___        ,___
+      ,TD(TD_A)            ,TD(TD_S)            ,___ ,___ ,___
+      ,___ ,___ ,___           ,___            ,___ ,___
+      ,MoveToLayer(QWERTY)   ,___ ,___           ,___            ,___ ,___
+
+                ,___   ,TD(TD_U)              ,___          ,TD(TD_O)         ,___
+                ,___ ,___              ,___          ,___         ,___
+      ,___      ,___           ,___              ,___          ,___         ,___
+      ,___      ,___           ,MoveToLayer(UPPER_0) ,___ ,___ ,___
    )
 )
 /* *INDENT-ON* */
@@ -112,21 +118,20 @@ KALEIDOSCOPE_INIT_PLUGINS(
 
 const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   switch (macroIndex) {
-  case MACRO_QWERTY:
-    // This macro is currently unused, but is kept around for compatibility
-    // reasons. We used to use it in place of `MoveToLayer(QWERTY)`, but no
-    // longer do. We keep it so that if someone still has the old layout with
-    // the macro in EEPROM, it will keep working after a firmware update.
-    Layer.move(QWERTY);
-    break;
-  case MACRO_VERSION_INFO:
-    if (keyToggledOn(keyState)) {
-      Macros.type(PSTR("Keyboardio Atreus - Kaleidoscope "));
-      Macros.type(PSTR(BUILD_INFORMATION));
-    }
-    break;
-  default:
-    break;
+    case MACRO_QWERTY:
+      // This macro is currently unused, but is kept around for compatibility
+      // reasons. We used to use it in place of `MoveToLayer(QWERTY)`, but no
+      // longer do. We keep it so that if someone still has the old layout with
+      // the macro in EEPROM, it will keep working after a firmware update.
+      Layer.move(QWERTY);
+      break;
+    case MACRO_VERSION_INFO:
+      if (keyToggledOn(keyState)) {
+        return Macros.type(PSTR("Keyboardio Atreus - Kaleidoscope "), PSTR(BUILD_INFORMATION));
+      }
+      break;
+    default:
+      break;
   }
 
   return MACRO_NONE;
@@ -134,29 +139,23 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 
 void tapDanceAction(uint8_t tap_dance_index, KeyAddr key_addr, uint8_t tap_count, kaleidoscope::plugin::TapDance::ActionType tap_dance_action) {
   switch (tap_dance_index) {
-    case TD_a:
-      return tapDanceActionKeys(tap_count, tap_dance_action, Key_A, Key_aUml);
     case TD_A:
-      return tapDanceActionKeys(tap_count, tap_dance_action, LSHIFT(Key_A), Key_AUml);
-    case TD_o:
-      return tapDanceActionKeys(tap_count, tap_dance_action, Key_O, Key_oUml);
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_aUml, Key_AUml);
     case TD_O:
-      return tapDanceActionKeys(tap_count, tap_dance_action, LSHIFT(Key_O), Key_OUml);
-    case TD_u:
-      return tapDanceActionKeys(tap_count, tap_dance_action, Key_U, Key_uUml);
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_oUml, Key_OUml);
     case TD_U:
-      return tapDanceActionKeys(tap_count, tap_dance_action, LSHIFT(Key_U), Key_UUml);
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_uUml, Key_UUml);
     case TD_E:
-      return tapDanceActionKeys(tap_count, tap_dance_action, Key_E, Key_EUR);
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_Eur, Key_eGrave);
     case TD_S:
-      return tapDanceActionKeys(tap_count, tap_dance_action, Key_S, Key_de_SS);
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_de_SS, Key_Paragraph);
   } 
 }
 
 void setup() {
-  TapDance.time_out = 200;
-  EEPROMKeymap.setup(10);
+  TapDance.time_out = 180;
   Kaleidoscope.setup();
+  //EEPROMKeymap.setup(10);
 }
 
 void loop() {

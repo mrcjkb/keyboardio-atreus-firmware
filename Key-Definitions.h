@@ -7,13 +7,15 @@
 #define Key_And LSHIFT(Key_7)
 #define Key_Star LSHIFT(Key_8)
 #define Key_Plus LSHIFT(Key_Equals)
-#define Key_uUml Key_U // TODO
-#define Key_UUml Key_U // TODO
-#define Key_oUml Key_U // TODO
-#define Key_OUml Key_U // TODO
-#define Key_aUml Key_U // TODO
-#define Key_AUml Key_U // TODO
+#define Key_uUml RALT(Key_Y)
+#define Key_UUml RALT(LSHIFT(Key_Y))
+#define Key_oUml RALT(Key_P)
+#define Key_OUml RALT(LSHIFT(Key_P))
+#define Key_aUml RALT(Key_Q)
+#define Key_AUml RALT(LSHIFT(Key_Q))
 #define Key_de_SS Key_U // TODO
-#define Key_EUR Key_U // TODO
-
+#define Key_Eur RALT(Key_5)
+#define Key_eGrave RALT(Key_E)
+#define Key_de_SS RALT(Key_S)
+#define Key_Paragraph RALT(LSHIFT(Key_S))
 

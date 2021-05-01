@@ -13,3 +13,18 @@ My Keyboardio Atreus firmware. Based on the standard US layout, with some additi
 - `make compile` to build
 - `make flash` to flash
 
+## Usage
+
+Set the keyboard layout to ` us altgr-intl`, e.g. on Arch Linux:
+```
+localectl set-x11-keymap us altgr-intl
+```
+The firmware is based on the default firmware and adds a second `UPPER_1` layer, accessible by tapping the `Esc` key from the first `UPPER_0` layer. It provides the following Key bindings:
+
+- A -> ä (single tap); Ä (double tap)
+- U -> ü (single tap); Ü (double tap)
+- O -> ö (single tap); Ö (double tap)
+- S -> ß (single tap); § (double tap)
+- E -> € (single tap); é (double tap)
+
+When in one of the `UPPER` layers, the `Fn` key switches down a layer, and back to the default layer when in `UPPER_0` and the `Esc` key switches up a layer, and back to the default layer when in the `UPPER_1` layer.
