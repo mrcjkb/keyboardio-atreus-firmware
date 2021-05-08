@@ -15,6 +15,7 @@ My Keyboardio Atreus firmware. Based on the standard US layout, with some additi
 
 ## Usage
 
+![Layout](./atreus-layout-card.svg)
 <img src="./atreus-layout-card.svg">
 
 Set the keyboard layout to ` us altgr-intl`, e.g. on Arch Linux:
