@@ -15,6 +15,8 @@ My Keyboardio Atreus firmware. Based on the standard US layout, with some additi
 
 ## Usage
 
+<img src="https://raw.githubusercontent.com/MrcJkb/keyboardio-atreus-firmware/cc990f84bff1d0a27d2bca5ec0cc9f841b58234d/atreus-layout-card.svg">
+
 Set the keyboard layout to ` us altgr-intl`, e.g. on Arch Linux:
 ```
 localectl set-x11-keymap us altgr-intl
@@ -26,5 +28,6 @@ The firmware is based on the default firmware and adds a second `UPPER_1` layer,
 - O -> ö (single tap); Ö (double tap)
 - S -> ß (single tap); § (double tap)
 - E -> € (single tap); é (double tap)
+- See the [keyboard layout SVG](https://github.com/MrcJkb/keyboardio-atreus-firmware/blob/main/atreus-layout-card.svg) for more.
 
 When in one of the `UPPER` layers, the `Fn` key switches down a layer, and back to the default layer when in `UPPER_0` and the `Esc` key switches up a layer, and back to the default layer when in the `UPPER_1` layer.
