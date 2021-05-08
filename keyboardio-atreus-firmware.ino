@@ -18,7 +18,7 @@
  */
 
 #ifndef BUILD_INFORMATION
-#define BUILD_INFORMATION "MrcJkb's firmware version 1.0.1"
+#define BUILD_INFORMATION "MrcJkb's firmware version 1.1.0"
 #endif
 
 #include "Kaleidoscope.h"
@@ -81,7 +81,7 @@ KEYMAPS(
   (
        Key_Insert            ,Key_Home                 ,Key_UpArrow   ,Key_End        ,Key_PageUp
       ,Key_Delete            ,Key_LeftArrow            ,Key_DownArrow ,Key_RightArrow ,Key_PageDown
-      ,M(MACRO_VERSION_INFO) ,Consumer_VolumeIncrement ,XXX           ,XXX            ,___ ,___
+      ,M(MACRO_VERSION_INFO) ,Consumer_VolumeIncrement ,Consumer_Mute           ,Consumer_DisplayBrightnessDecrement            ,Consumer_DisplayBrightnessIncrement ,___
       ,LockLayer(UPPER_1)   ,Consumer_VolumeDecrement ,___           ,___            ,___ ,___
 
                 ,Key_UpArrow   ,Key_F7              ,Key_F8          ,Key_F9         ,Key_F10
