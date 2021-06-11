@@ -18,7 +18,7 @@
  */
 
 #ifndef BUILD_INFORMATION
-#define BUILD_INFORMATION "MrcJkb's firmware version 1.1.0"
+#define BUILD_INFORMATION "MrcJkb's firmware version 1.2.0"
 #endif
 
 #include "Kaleidoscope.h"
@@ -32,7 +32,9 @@
 
 enum {
   MACRO_QWERTY,
-  MACRO_VERSION_INFO
+  MACRO_VERSION_INFO,
+  MACRO_GERMAN_SIG,
+  MACRO_ENGLISH_SIG,
 };
 
 enum {
@@ -94,7 +96,7 @@ KEYMAPS(
   (
        ___            ,___                 ,TD(TD_E)   ,___        ,___
       ,TD(TD_A)            ,TD(TD_S)            ,___ ,___ ,___
-      ,___ ,___ ,___           ,___            ,___ ,___
+      ,___ ,___ ,___           ,___            ,M(MACRO_GERMAN_SIG) ,M(MACRO_ENGLISH_SIG)
       ,MoveToLayer(QWERTY)   ,___ ,___           ,___            ,___ ,___
 
                 ,___   ,TD(TD_U)              ,___          ,TD(TD_O)         ,___
@@ -128,6 +130,16 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     case MACRO_VERSION_INFO:
       if (keyToggledOn(keyState)) {
         return Macros.type(PSTR("Keyboardio Atreus - Kaleidoscope "), PSTR(BUILD_INFORMATION));
+      }
+      break;
+    case MACRO_GERMAN_SIG:
+      if (keyToggledOn(keyState)) {
+        return Macros.type(PSTR("Beste Gr\x81sse\nMarc"));
+      }
+      break;
+    case MACRO_ENGLISH_SIG:
+      if (keyToggledOn(keyState)) {
+        return Macros.type(PSTR("Best regards,\nMarc"));
       }
       break;
     default:
