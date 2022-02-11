@@ -13,6 +13,24 @@
   outputs = { self, nixpkgs, utils, kaleidoscope, ... }:
     let
       name = "keyboardio-atreus-firmware";
+      kaleidoscope_dir_ready = with import nixpkgs { system = "x86_64-linux"; };
+      stdenv.mkDerivation {
+        name = "Kaleidoscope";
+        src = self;
+        buildPhase = ''
+        '';
+        buildInputs = [
+          perl
+          curl
+          arduino-cli
+        ];
+        installPhase = ''
+        mkdir -p "$out/Kaleidoscope"
+        cp -R ${kaleidoscope}/* $out/Kaleidoscope
+        cd $out/Kaleidoscope
+        make setup #FIXME: Currently fails due to attempt to download arduino tools
+        '';
+      };
     in
     utils.lib.eachDefaultSystem
       (system:
@@ -33,7 +51,7 @@
             gnumake 
           ];
           buildEnvVars = {
-            KALEIDOSCOPE_DIR = kaleidoscope;
+            KALEIDOSCOPE_DIR = kaleidoscope_dir_ready;
           };
         in
         rec {
@@ -42,7 +60,7 @@
             {
               inherit buildInputs nativeBuildInputs;
               shellHook = ''
-                export KALEIDOSCOPE_DIR=${kaleidoscope};
+                export KALEIDOSCOPE_DIR=${kaleidoscope_dir_ready};
               '';
             }// buildEnvVars;
         }
