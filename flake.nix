@@ -15,7 +15,7 @@
       name = "keyboardio-atreus-firmware";
       kaleidoscope_dir_ready = with import nixpkgs { system = "x86_64-linux"; };
       stdenv.mkDerivation {
-        name = "Kaleidoscope";
+        inherit name;
         src = self;
         buildPhase = ''
         '';
