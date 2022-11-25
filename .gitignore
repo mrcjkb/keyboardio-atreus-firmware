@@ -36,3 +36,5 @@ Session.vim
 
 # Logs
 *.log
+
+.direnv
